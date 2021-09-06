@@ -1,0 +1,36 @@
+﻿@page "/Notes"
+
+<h3>Notes</h3>
+
+<ul>
+    @foreach (var note in notes)
+     {
+        <li>
+          <input @bind="note.NoteText" />
+            <button @onclick="(()=>notes.Remove(note))">Delete</button>
+        </li>
+     }
+</ul>
+
+<input placeholder="Note" @bind="newNote" />
+<button @onclick="AddNote">Add Note</button>
+
+@code {
+    private List<NoteItem> notes = new(); //TODO: Load notes from DB
+    private string newNote;
+    private void AddNote()
+    {
+        if (newNote != String.Empty)
+        {
+            notes.Add(new NoteItem { NoteText = newNote });
+            //TODO: Save into DB
+            newNote = String.Empty;
+        }
+    }
+    private void RemoveNote(int noteIndex)
+    {
+        //TODO: Delete from DB
+        notes.RemoveAt(noteIndex);
+    }
+}
+
